@@ -2,7 +2,7 @@
 set -e
 
 # config
-source ../config/config.env
+source ../config/.env
 
 echo "Step 1: build"
 forge build
@@ -19,7 +19,7 @@ DEPLOYED_CONTRACT_ADDRESS=$(forge create \
   --broadcast \
   | grep "Deployed to" | awk '{print $3}')
 
-../config/print.sh
+../execute/print.sh
 
 echo "CA: $DEPLOYED_CONTRACT_ADDRESS"
 
@@ -29,9 +29,9 @@ current_number=$(cast call $DEPLOYED_CONTRACT_ADDRESS "number()" --rpc-url $RPC)
 echo "Current number: $current_number"
 
 echo "Step 2: Set number to 10"
-../config/print.sh
+../execute/print.sh
 cast send $DEPLOYED_CONTRACT_ADDRESS "setNumber(uint256)" 10 --rpc-url $RPC --private-key $PK
-../config/print.sh
+../execute/print.sh
 
 echo "Step 3: Read updated number \n"
 
